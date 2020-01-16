@@ -4,7 +4,7 @@ Algebraic application demo for Functional Scala 2019
 
 Demonstrates the potential of Union types if we adopt a more flexible
 application that applies to disjunctions if any of the branches could be
-applied by the function.
+applied by the function. I called this algebraic application.
 
 The slides are worksheets that can be executed in VSCode with the dotty
 extension.
@@ -31,4 +31,4 @@ I have sent a [PR](https://github.com/lampepfl/dotty/pull/7829) to fix this but 
 This will launch VSCode with the patched dotty version
 The slides are the worsheets in the slides folder.
 
-VSCode will show a 'Run this worsheet' button on top of each worksheet.
+VSCode will show a 'Run this worksheet' button on top of each worksheet.
