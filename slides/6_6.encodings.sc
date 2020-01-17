@@ -28,3 +28,31 @@ summon [
 
 //qed. the final type as in the flow diagram
 val sqrtdUnion:  Double | Negative | Throwable = sqrt $ signed
+
+// Flexible composition of functions enabling better reuse while having control of complex signatures and error recovery
+val sqrtFromInput: (String | Int) => Double | Negative | Throwable =
+   intOrStr => sqrt $ (sign $ (toInt $ intOrStr))
+
+val abs: Negative => Positive = n => Positive(Math.abs(n.neg))
+val sqrtAbs: (String | Int) => Double | Throwable =
+   intOrStr => sqrt $ (abs $ (sign $ (toInt $ intOrStr)))
+
+// e.g. we recover from intTry's discouraged use of Try. Anything else is non recoverable
+case class NumberFormatError(msg: String)
+val betterNFE: Throwable => NumberFormatError = t => if (t.isInstanceOf[NumberFormatException]) NumberFormatError(t.getMessage) else throw new IllegalStateException(t)
+
+val betterSqrtFromInput: (String | Int) => Double | NumberFormatError =
+    x => sqrt $ (abs $ (sign $ (betterNFE $ (toInt $ x))))
+
+type Zero = 0.0.type
+val swallowNumberFormatErrors: NumberFormatError => Zero = _ => 0.0 //TODO: Try to recover number from the raw input
+
+val zeroDefaultSqrtFromInput: (String | Int) => Double =
+    x => swallowNumberFormatErrors $ (sqrt $ (abs $ (sign $ (betterNFE $ (toInt $ x)))))
+
+zeroDefaultSqrtFromInput( 10)
+zeroDefaultSqrtFromInput( 81)
+zeroDefaultSqrtFromInput(-81)
+zeroDefaultSqrtFromInput(  2)
+zeroDefaultSqrtFromInput("2")
+zeroDefaultSqrtFromInput("x: 2F")
