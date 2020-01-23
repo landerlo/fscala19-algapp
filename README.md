@@ -6,8 +6,10 @@ Demonstrates the potential of Union types if we adopt a more flexible
 application that applies to disjunctions if any of the branches could be
 applied by the function. I called this algebraic application.
 
-The slides are worksheets that can be executed in VSCode with the dotty
+The [slides](https://github.com/landerlo/fscala19-algapp/tree/master/slides) are worksheets that can be executed in VSCode with the dotty
 extension.
+
+Functional Scala 2019 video recording: <https://www.youtube.com/watch?v=gEmDyJmwx8Y>
 
 The code in this demo requires a fix for dotty issue [#4867](https://github.com/lampepfl/dotty/issues/4867)
 
